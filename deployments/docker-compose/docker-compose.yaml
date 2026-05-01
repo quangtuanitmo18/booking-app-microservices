@@ -1,4 +1,4 @@
-version: "3.8"
+
 
 services:
   #######################################################
@@ -156,7 +156,7 @@ services:
   identity:
     build:
       context: ../..
-      dockerfile: ../../src/identity/Dockerfile
+      dockerfile: src/identity/Dockerfile
     container_name: identity
     depends_on:
       - postgres
@@ -175,7 +175,7 @@ services:
   flight:
     build:
       context: ../..
-      dockerfile: ../../src/flight/Dockerfile
+      dockerfile: src/flight/Dockerfile
     container_name: flight
     depends_on:
       - postgres
@@ -194,7 +194,7 @@ services:
   passenger:
     build:
       context: ../..
-      dockerfile: ../../src/passenger/Dockerfile
+      dockerfile: src/passenger/Dockerfile
     container_name: passenger
     depends_on:
       - postgres
@@ -213,7 +213,7 @@ services:
   booking:
     build:
       context: ../..
-      dockerfile: ../../src/booking/Dockerfile
+      dockerfile: src/booking/Dockerfile
     container_name: booking
     depends_on:
       - postgres
