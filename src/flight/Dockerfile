@@ -20,9 +20,13 @@ WORKDIR /app
 COPY src/building-blocks ./src/building-blocks
 COPY src/flight ./src/flight
 
+# Compile building-blocks first
+WORKDIR /app/src/building-blocks
+RUN npm run build
+
 # Build
 WORKDIR /app/src/flight
-RUN npm run build
+RUN npm run build && ls -R dist
 
 # -------- Runner --------
 FROM node:20.19.2-alpine AS runner

@@ -20,6 +20,10 @@ WORKDIR /app
 COPY src/building-blocks ./src/building-blocks
 COPY src/booking ./src/booking
 
+# Compile building-blocks first
+WORKDIR /app/src/building-blocks
+RUN npm run build
+
 # Build
 WORKDIR /app/src/booking
 RUN npm run build

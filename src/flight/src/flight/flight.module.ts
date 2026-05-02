@@ -17,6 +17,10 @@ import {
   GetFlightByIdController,
   GetFlightByIdHandler
 } from '@/flight/features/v1/get-flight-by-id/get-flight-by-id';
+import {
+  GetFlightsController,
+  GetFlightsHandler
+} from '@/flight/features/v1/get-flights/get-flights';
 import { RabbitmqModule } from 'building-blocks/rabbitmq/rabbitmq.module';
 
 @Module({
@@ -25,10 +29,11 @@ import { RabbitmqModule } from 'building-blocks/rabbitmq/rabbitmq.module';
     RabbitmqModule.forRoot(),
     TypeOrmModule.forFeature([Flight, Aircraft, Airport, Seat])
   ],
-  controllers: [CreateFlightController, GetFlightByIdController],
+  controllers: [CreateFlightController, GetFlightByIdController, GetFlightsController],
   providers: [
     CreateFlightHandler,
     GetFlightByIdHandler,
+    GetFlightsHandler,
     {
       provide: 'IFlightRepository',
       useClass: FlightRepository

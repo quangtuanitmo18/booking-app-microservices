@@ -20,6 +20,10 @@ WORKDIR /app
 COPY src/building-blocks ./src/building-blocks
 COPY src/identity ./src/identity
 
+# Compile building-blocks first
+WORKDIR /app/src/building-blocks
+RUN npm run build
+
 # Build
 WORKDIR /app/src/identity
 RUN npm run build

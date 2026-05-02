@@ -38,7 +38,7 @@ async function bootstrap() {
     app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
     app.use((req, res, next) => {
-        if (req.originalUrl == '/' || req.originalUrl.includes('favicon.ico')) {
+        if (req.originalUrl == '/' || req.originalUrl.includes('favicon.ico') || req.originalUrl === '/health') {
             return res.send(configs.serviceName);
         }
         return next();

@@ -16,6 +16,7 @@ export class CreateUserHandler {
 
         const passenger = await _passengerRepository.createPassenger(
             new Passenger({
+                userId: message.id,
                 name: message.name,
                 passportNumber: message.passportNumber,
                 age: 20,

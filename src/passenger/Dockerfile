@@ -20,6 +20,10 @@ WORKDIR /app
 COPY src/building-blocks ./src/building-blocks
 COPY src/passenger ./src/passenger
 
+# Compile building-blocks first
+WORKDIR /app/src/building-blocks
+RUN npm run build
+
 # Build
 WORKDIR /app/src/passenger
 RUN npm run build

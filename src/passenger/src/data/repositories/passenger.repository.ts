@@ -7,6 +7,7 @@ export interface IPassengerRepository {
   createPassenger(passenger: Passenger): Promise<Passenger>;
 
   findPassengerById(id: number): Promise<Passenger>;
+  findPassengerByUserId(userId: number): Promise<Passenger>;
 
   findPassengers(
       page: number,
@@ -29,6 +30,10 @@ export class PassengerRepository implements IPassengerRepository {
 
   async findPassengerById(id: number): Promise<Passenger> {
     return this.passengerRepository.findOneBy({ id: id });
+  }
+
+  async findPassengerByUserId(userId: number): Promise<Passenger> {
+    return this.passengerRepository.findOneBy({ userId: userId });
   }
 
   async findPassengers(

@@ -114,6 +114,7 @@ export class CreateBookingHandler implements ICommandHandler<CreateBooking> {
         flightNumber: flightDto?.flightNumber,
         price: flightDto?.price,
         passengerName: passengerDto?.name,
+        passengerId: command.passengerId,
         description: command?.description,
         flightDate: flightDto?.flightDate,
         aircraftId: flightDto?.aircraftId,

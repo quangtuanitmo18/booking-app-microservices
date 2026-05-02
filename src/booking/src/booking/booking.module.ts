@@ -10,12 +10,22 @@ import {
   CreateBookingController,
   CreateBookingHandler
 } from '@/booking/features/v1/create-booking/create-booking';
+import {
+  GetBookingsByPassengerController,
+  GetBookingsByPassengerHandler
+} from '@/booking/features/v1/get-bookings-by-passenger/get-bookings-by-passenger';
+import {
+  CancelBookingController,
+  CancelBookingHandler
+} from '@/booking/features/v1/cancel-booking/cancel-booking';
 
 @Module({
   imports: [CqrsModule, RabbitmqModule.forRoot(), TypeOrmModule.forFeature([Booking])],
-  controllers: [CreateBookingController],
+  controllers: [CreateBookingController, GetBookingsByPassengerController, CancelBookingController],
   providers: [
     CreateBookingHandler,
+    GetBookingsByPassengerHandler,
+    CancelBookingHandler,
     {
       provide: 'IBookingRepository',
       useClass: BookingRepository

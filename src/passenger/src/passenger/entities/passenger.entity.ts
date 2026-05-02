@@ -9,6 +9,9 @@ export class Passenger {
     @Column()
     name: string;
 
+    @Column({ nullable: true })
+    userId: number;
+
     @Column()
     passportNumber: string;
 

@@ -11,6 +11,8 @@ export interface ISeatRepository {
 
   getAvailableSeat(flightId: number, seatNumber: string): Promise<Seat>;
 
+  getSeatByFlightNumberAndSeatNumber(flightNumber: string, seatNumber: string): Promise<Seat>;
+
   getSeatsByFlightId(flightId: number): Promise<Seat[]>;
 }
 
@@ -39,6 +41,17 @@ export class SeatRepository implements ISeatRepository {
       .where('flight.id = :flightId', { flightId })
       .andWhere('seat.seatNumber = :seatNumber', { seatNumber })
       .andWhere('seat.isReserved = false')
+      .getOne();
+
+    return seat;
+  }
+
+  async getSeatByFlightNumberAndSeatNumber(flightNumber: string, seatNumber: string): Promise<Seat> {
+    const seat = await this.seatRepository
+      .createQueryBuilder('seat')
+      .leftJoinAndSelect('seat.flight', 'flight')
+      .where('flight.flightNumber = :flightNumber', { flightNumber })
+      .andWhere('seat.seatNumber = :seatNumber', { seatNumber })
       .getOne();
 
     return seat;

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, Inject, OnApplicationBootstrap } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SeatRepository } from '@/data/repositories/seatRepository';
@@ -12,6 +12,11 @@ import {
 } from '@/seat/features/v1/get-available-seats/get-available-seats';
 import { ReserveSeatController, ReserveSeatHandler } from '@/seat/features/v1/reserve-seat/reserve-seat';
 import { RabbitmqModule } from 'building-blocks/rabbitmq/rabbitmq.module';
+
+import { CancelBookingConsumerHandler } from '@/seat/consumers/cancel-booking';
+import { BookingCancelled } from 'building-blocks/contracts/booking.contract';
+import { IRabbitmqConsumer } from 'building-blocks/rabbitmq/rabbitmq-subscriber';
+import { ISeatRepository } from '@/data/repositories/seatRepository';
 
 @Module({
   imports: [CqrsModule, RabbitmqModule.forRoot(), TypeOrmModule.forFeature([Seat, Flight])],
@@ -31,4 +36,16 @@ import { RabbitmqModule } from 'building-blocks/rabbitmq/rabbitmq.module';
   ],
   exports: []
 })
-export class SeatModule {}
+export class SeatModule implements OnApplicationBootstrap {
+  constructor(
+    @Inject('IRabbitmqConsumer') private readonly rabbitmqConsumer: IRabbitmqConsumer,
+    @Inject('ISeatRepository') private readonly seatRepository: ISeatRepository
+  ) {}
+
+  async onApplicationBootstrap(): Promise<void> {
+    await this.rabbitmqConsumer.consumeMessage<BookingCancelled>(
+      new BookingCancelled(),
+      new CancelBookingConsumerHandler(this.seatRepository).handle
+    );
+  }
+}

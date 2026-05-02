@@ -9,6 +9,10 @@ import {
     GetPassengerByIdHandler
 } from '@/passenger/features/v1/get-passenger-by-id/get-passenger-by-id';
 import {GetPassengersController, GetPassengersHandler} from '@/passenger/features/v1/get-passengers/get-passengers';
+import {
+    GetPassengerByMeController,
+    GetPassengerByMeHandler
+} from '@/passenger/features/v1/get-passenger-by-me/get-passenger-by-me';
 import {UserCreated} from "building-blocks/contracts/identity.contract";
 import {CreateUserHandler} from '@/user/consumers/create-user';
 import {IRabbitmqConsumer} from "building-blocks/rabbitmq/rabbitmq-subscriber";
@@ -16,8 +20,8 @@ import {IRabbitmqConsumer} from "building-blocks/rabbitmq/rabbitmq-subscriber";
 
 @Module({
     imports: [CqrsModule, RabbitmqModule.forRoot(), TypeOrmModule.forFeature([Passenger])],
-    controllers: [GetPassengerByIdController, GetPassengersController],
-    providers: [GetPassengerByIdHandler, GetPassengersHandler,
+    controllers: [GetPassengerByIdController, GetPassengersController, GetPassengerByMeController],
+    providers: [GetPassengerByIdHandler, GetPassengersHandler, GetPassengerByMeHandler,
         {
             provide: 'IPassengerRepository',
             useClass: PassengerRepository,

@@ -33,6 +33,12 @@ export class Booking {
   passengerName: string;
 
   @Column()
+  passengerId: number;
+
+  @Column({ default: 'CONFIRMED' })
+  status: string;
+
+  @Column()
   createdAt: Date;
 
   @Column({ nullable: true })

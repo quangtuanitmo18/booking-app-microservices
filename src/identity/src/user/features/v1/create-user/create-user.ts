@@ -66,7 +66,6 @@ export class CreateUserController {
   constructor(private readonly commandBus: CommandBus) {}
 
   @Post('create')
-  @UseGuards(JwtGuard)
   @ApiResponse({ status: 401, description: 'UNAUTHORIZED' })
   @ApiResponse({ status: 400, description: 'BAD_REQUEST' })
   @ApiResponse({ status: 403, description: 'FORBIDDEN' })
