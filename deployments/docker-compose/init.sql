@@ -1,0 +1,4 @@
+CREATE DATABASE booking;
+CREATE DATABASE passenger;
+CREATE DATABASE flight;
+CREATE DATABASE identity;

@@ -13,6 +13,7 @@
       "@tests/*": ["test/*"]
     },
     "outDir": "./dist",                     // Output directory
+    "rootDir": "./",                        // Root directory for consistent output structure
     "removeComments": true,                 // Remove comments in output
 
     // Decorators (needed for NestJS)

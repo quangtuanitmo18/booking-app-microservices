@@ -5,12 +5,6 @@
 global:
   scrape_interval: 5s
 
-otlp:
-  promote_resource_attributes:
-  - service.instance.id
-  - service.name
-  - service.namespace
-  - service.version
 
 scrape_configs:
 # when we use otel-collector we should comment other jobs in prometheus config, and we read configs from `otel-collector-config`

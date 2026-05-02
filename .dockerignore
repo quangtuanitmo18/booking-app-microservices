@@ -1,0 +1,43 @@
+# Dependencies
+**/node_modules
+
+# Build output
+**/dist
+
+# Version control
+**/.git
+**/.gitignore
+
+# Environment files (loaded via env_file in compose, not baked into image)
+**/.env
+**/.env.local
+**/.env.*.local
+
+# IDE & editor
+**/.vscode
+**/.idea
+**/*.swp
+**/*.swo
+
+# Test & coverage
+**/coverage
+**/.nyc_output
+
+# Logs
+**/*.log
+**/npm-debug.log*
+
+# OS files
+**/.DS_Store
+**/Thumbs.db
+
+# Agent / AI config
+.agent/
+
+# Deployment configs (not needed in app images)
+deployments/
+
+# Documentation
+**/*.md
+!**/README.md
+LICENSE
