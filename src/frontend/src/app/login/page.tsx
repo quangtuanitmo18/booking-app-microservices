@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { apiFetch } from "@/lib/api"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -20,17 +21,10 @@ export default function LoginPage() {
     setError("")
 
     try {
-      const bffUrl = process.env.NEXT_PUBLIC_BFF_URL || "http://127.0.0.1:3002"
-      const res = await fetch(`${bffUrl}/api/auth/login`, {
+      await apiFetch("/api/auth/login", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       })
-
-      if (!res.ok) {
-        const errorData = await res.json()
-        throw new Error(errorData.message || "Failed to login")
-      }
 
       router.push("/")
     } catch (err: any) {

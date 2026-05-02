@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { apiFetch } from "@/lib/api"
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -24,17 +25,10 @@ export default function RegisterPage() {
     setError("")
 
     try {
-      const bffUrl = process.env.NEXT_PUBLIC_BFF_URL || "http://127.0.0.1:3002"
-      const res = await fetch(`${bffUrl}/api/auth/register`, {
+      await apiFetch("/api/auth/register", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       })
-
-      if (!res.ok) {
-        const errorData = await res.json()
-        throw new Error(errorData.message || "Failed to register")
-      }
 
       router.push("/login")
     } catch (err: any) {

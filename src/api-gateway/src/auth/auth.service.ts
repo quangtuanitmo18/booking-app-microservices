@@ -3,10 +3,11 @@ import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
+import { Role } from '../shared/constants';
 
 @Injectable()
 export class AuthService {
-  private readonly identityServiceUrl = process.env.IDENTITY_SERVICE_URL || 'http://localhost:3000';
+  private readonly identityServiceUrl = process.env.IDENTITY_SERVICE_URL || 'http://localhost:3333';
 
   constructor(private readonly httpService: HttpService) {}
 
@@ -29,7 +30,7 @@ export class AuthService {
       // Adding default role to register payload
       const payload = {
         ...registerDto,
-        role: 'USER', 
+        role: Role.USER,
       };
       // We assume /api/v1/user/create is the registration endpoint or can be used as such.
       // If it requires auth, we might need a bypass in Identity service or a dedicated public register endpoint.

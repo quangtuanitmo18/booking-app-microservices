@@ -1,4 +1,4 @@
-const BFF_URL = process.env.NEXT_PUBLIC_BFF_URL || 'http://127.0.0.1:3002';
+const BFF_URL = process.env.NEXT_PUBLIC_BFF_URL || 'http://127.0.0.1:3377';
 
 export async function apiFetch<T>(path: string, options?: RequestInit): Promise<T> {
   const res = await fetch(`${BFF_URL}${path}`, {

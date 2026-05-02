@@ -8,8 +8,13 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   // Enable CORS for frontend
+  const defaultOrigins = ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:3001', 'http://127.0.0.1:3001'];
+  const allowedOrigins = process.env.FRONTEND_URL 
+    ? process.env.FRONTEND_URL.split(',').map(url => url.trim()) 
+    : defaultOrigins;
+
   app.enableCors({
-    origin: process.env.FRONTEND_URL ?? 'http://localhost:3001',
+    origin: allowedOrigins,
     credentials: true,
   });
 
@@ -40,6 +45,6 @@ async function bootstrap() {
   // Global Prefix
   app.setGlobalPrefix('api');
 
-  await app.listen(process.env.PORT ?? 3002, '127.0.0.1');
+  await app.listen(process.env.PORT ?? 3002, '0.0.0.0');
 }
 bootstrap();

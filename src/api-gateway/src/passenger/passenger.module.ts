@@ -4,7 +4,12 @@ import { PassengerController } from './passenger.controller';
 import { PassengerService } from './passenger.service';
 
 @Module({
-  imports: [HttpModule],
+  imports: [
+    HttpModule.register({
+      timeout: 5000,
+      maxRedirects: 5,
+    }),
+  ],
   controllers: [PassengerController],
   providers: [PassengerService],
 })

@@ -4,6 +4,7 @@ import type { Response, Request } from 'express';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
+import { COOKIE_ACCESS_TOKEN } from '../shared/constants';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -22,7 +23,7 @@ export class AuthController {
     
     if (authResult?.access?.token) {
       // Set access token in HttpOnly cookie
-      response.cookie('access_token', authResult.access.token, {
+      response.cookie(COOKIE_ACCESS_TOKEN, authResult.access.token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
@@ -46,7 +47,7 @@ export class AuthController {
   @ApiOperation({ summary: 'Logout and clear cookie' })
   @ApiResponse({ status: 200, description: 'Logout successful' })
   logout(@Res({ passthrough: true }) response: Response) {
-    response.clearCookie('access_token');
+    response.clearCookie(COOKIE_ACCESS_TOKEN);
     return { message: 'Logout successful' };
   }
 
@@ -55,7 +56,7 @@ export class AuthController {
   @ApiResponse({ status: 200, description: 'Session valid' })
   @ApiResponse({ status: 401, description: 'Session invalid' })
   me(@Req() request: Request, @Res({ passthrough: true }) response: Response) {
-    const token = request.cookies['access_token'];
+    const token = request.cookies[COOKIE_ACCESS_TOKEN];
     if (!token) {
       response.status(HttpStatus.UNAUTHORIZED);
       return { message: 'Unauthorized' };

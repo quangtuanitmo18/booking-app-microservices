@@ -3,6 +3,7 @@ import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import type { Request } from 'express';
 import { BookingService } from './booking.service';
 import { CreateBookingDto } from './dto/create-booking.dto';
+import { COOKIE_ACCESS_TOKEN } from '../shared/constants';
 
 @ApiTags('Bookings')
 @Controller('bookings')
@@ -16,7 +17,7 @@ export class BookingController {
   @ApiResponse({ status: 400, description: 'Bad request' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   async createBooking(@Body() dto: CreateBookingDto, @Req() req: Request) {
-    const token = req.cookies?.['access_token'];
+    const token = req.cookies?.[COOKIE_ACCESS_TOKEN];
     return this.bookingService.createBooking(dto, token);
   }
 
@@ -25,7 +26,7 @@ export class BookingController {
   @ApiResponse({ status: 200, description: 'User bookings' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   async getMyBookings(@Req() req: Request) {
-    const token = req.cookies?.['access_token'];
+    const token = req.cookies?.[COOKIE_ACCESS_TOKEN];
     return this.bookingService.getMyBookings(token);
   }
 
@@ -36,7 +37,7 @@ export class BookingController {
   @ApiResponse({ status: 400, description: 'Bad request' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   async cancelBooking(@Param('id') id: string, @Req() req: Request) {
-    const token = req.cookies?.['access_token'];
+    const token = req.cookies?.[COOKIE_ACCESS_TOKEN];
     return this.bookingService.cancelBooking(id, token);
   }
 }
